@@ -193,6 +193,28 @@ h1,h2,h3{font-weight:400;text-wrap:balance;line-height:1.15;margin:0}
 .pricebox .svc-price{text-align:left}
 @media (max-width:860px){.detail{grid-template-columns:1fr;gap:32px}.pricebox{position:static}.ways{grid-template-columns:1fr}}
 
+
+/* dragon gate */
+.gate-hero{background:var(--night);color:var(--on-night);padding-block:44px 60px;text-align:center}
+.gate-hero .script{color:var(--gold-light);margin-top:6px}
+.gate-hero .eyebrow{color:var(--gold-light)}
+.gate-hero .sub{margin:8px auto 0;font-style:italic;font-size:23px;color:rgba(244,238,223,.82);max-width:44ch}
+.gate-stage{position:relative;max-width:1200px;margin:30px auto 0;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#05071a;box-shadow:0 0 70px rgba(90,150,255,.28)}
+.gate-stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform-origin:50.2% 54.5%;transition:transform 1.1s cubic-bezier(.55,0,.35,1),filter 1.1s}
+.gate-flash{position:absolute;inset:0;pointer-events:none;opacity:0;background:radial-gradient(circle at 50.2% 54.5%,rgba(255,255,255,.95),rgba(170,210,255,.7) 30%,rgba(11,18,51,0) 70%);transition:opacity .8s .3s}
+.gate-stage.entering video{transform:scale(3.4);filter:brightness(1.5) saturate(1.3)}
+.gate-stage.entering .gate-flash{opacity:1}
+.portal-link{position:absolute;left:50.2%;top:54.5%;width:37%;height:64%;transform:translate(-50%,-50%);border-radius:50%;display:grid;place-items:center;text-decoration:none;cursor:pointer;outline:none}
+.portal-link::after{content:"";position:absolute;inset:0;border-radius:50%;transition:box-shadow .45s;box-shadow:0 0 0 0 rgba(160,235,255,0)}
+.portal-link:hover::after,.portal-link:focus-visible::after{box-shadow:0 0 0 3px rgba(170,240,255,.85),0 0 70px 14px rgba(120,200,255,.55),inset 0 0 70px rgba(255,255,255,.25)}
+.portal-word{font-family:var(--script);font-size:clamp(28px,5vw,64px);color:#fff;text-shadow:0 0 18px rgba(140,210,255,.95),0 0 4px rgba(255,255,255,.9);opacity:0;transform:scale(.92);transition:opacity .45s,transform .45s}
+.portal-link:hover .portal-word,.portal-link:focus-visible .portal-word{opacity:1;transform:scale(1)}
+.gate-stage.entering .portal-word{opacity:0}
+.gate-hint{margin:22px 0 16px;font-style:italic;color:var(--gold-light);letter-spacing:.04em;animation:breathe 3.2s ease-in-out infinite}
+@keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
+@media (hover:none){.portal-word{opacity:.85;transform:none}}
+@media (prefers-reduced-motion:reduce){.gate-hint{animation:none}.gate-stage video{transition:none}}
+
 /* contact + footer */
 .contact{display:grid;justify-items:center;text-align:center;gap:14px;max-width:680px;margin:0 auto}
 .contact p{margin:0;font-style:italic;font-size:22px}
@@ -293,7 +315,7 @@ footer.site small{color:rgba(244,238,223,.7);font-size:14px;max-width:60ch}
   }
 
   /* ---------- content from the current site ---------- */
-  const NAV = [['home','Home'],['spiritual-mentorship','Spiritual Mentorship'],['healing-sessions','Healing Sessions'],['soul-journey-retreats','Soul Journey Retreats'],['water-initiation','Water Initiation'],['classes','Classes'],['becoming-a-channel','Becoming a Channel'],['my-timeline','My Timeline'],['blog','Blog']];
+  const NAV = [['home','Home'],['spiritual-mentorship','Spiritual Mentorship'],['healing-sessions','Healing Sessions'],['soul-journey-retreats','Soul Journey Retreats'],['water-initiation','Water Initiation'],['dragon-gate','Dragon’s Gate'],['becoming-a-channel','Becoming a Channel'],['my-timeline','My Timeline'],['blog','Blog']];
   const OFFERS = [
     ['SoulJourney Regression','#regression-therapy','Learn more'],
     ['Spiritual Alchemy Session','#contact','Book a session'],
@@ -301,7 +323,7 @@ footer.site small{color:rgba(244,238,223,.7);font-size:14px;max-width:60ch}
     ['Soul Journey Retreats','#soul-journey-retreats','Learn more'],
     ['Water Initiation','#water-initiation','Learn more'],
     ['Soul Guide Session','#contact','Book a session'],
-    ['Guide Communication Through the Dragon’s Gate','#classes','See the class'],
+    ['Guide Communication Through the Dragon’s Gate','#dragon-gate','Enter the gate'],
     ['Multidimensional Energy Healing','#energy-healing','Learn more'],
     ['Soul Connection Akashic Reading','#akashic-reading','Learn more'],
     ['Energy Upgrades and Activations','#activations','Learn more'],
@@ -372,7 +394,7 @@ With Love for your Journey to your True Nature~`;
   ];
 
   /* ---------- healing sessions (from the Star of Love site) ---------- */
-  const SUBPAGES = { 'regression-therapy':'healing-sessions', 'energy-healing':'healing-sessions', 'akashic-reading':'healing-sessions', 'activations':'healing-sessions', 'sacred-bodywork':'healing-sessions' };
+  const SUBPAGES = { 'regression-therapy':'healing-sessions', 'energy-healing':'healing-sessions', 'akashic-reading':'healing-sessions', 'activations':'healing-sessions', 'sacred-bodywork':'healing-sessions', 'classes':'dragon-gate' };
   const SVC_REMOTE = [
     ['Quantum Soul Regression','3 hr','$333','regression-therapy'],
     ['Regression Therapy','1 hr 30 min','$188','regression-therapy'],
@@ -703,10 +725,22 @@ I hold certifications in the following but my connection to the divine and the c
     '</main>' +
 
     /* classes */
+    '<main data-view="dragon-gate" id="dragon-gate" hidden>' +
+      '<section class="gate-hero"><div class="wrap">' +
+        '<span class="eyebrow">Classes</span><h1 class="script">The Dragon’s Gate</h1>' +
+        '<p class="sub">Awaken your highest and deepest channels of communication.</p>' +
+        '<div class="gate-stage" id="gate-stage">' +
+          '<video id="gate-video" src="dragon-gate.mp4" poster="dragon-gate-poster.jpg" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>' +
+          '<span class="gate-flash" aria-hidden="true"></span>' +
+          '<a class="portal-link" href="#classes" data-act="enter-gate" aria-label="Step through the portal to the Dragon’s Gate class"><span class="portal-word">Enter</span></a>' +
+        '</div>' +
+        '<p class="gate-hint">Touch the portal to step through</p>' +
+        '<div class="actions"><a class="btn" href="#classes" data-act="enter-gate">Enter the Gate</a></div>' +
+      '</div></section>' +
+    '</main>' +
+
     '<main data-view="classes" id="classes" hidden>' +
-      pageHero('Journey through the Dragon’s Gate', 'Awaken your highest and deepest channels of communication.') +
-      '<div class="gate-band"><div class="wrap"><figure class="gate"><canvas id="gate" role="img" aria-label="Animated Dragon Stargate: two golden dragons circle a glowing portal filled with a shifting violet and blue nebula, framed by the stars of Orion in a slowly moving night sky."></canvas>' +
-        '<figcaption>Dragon Stargate · Orion rising</figcaption></figure></div></div>' +
+      pageHero('Guide Communication Through the Dragon’s Gate', 'Purifying the Clairs') +
       '<section class="section" id="class-about"><div class="wrap"><div class="prose">' +
         '<p class="lead">I’ve been teaching guide communication during my mentorships for over 10 years. This new program has been created from my personal purification process that my guides took me through to create crystal clear communication unfiltered by illusion and distortion.</p>' +
         '<p>My offerings are always 1:1 and live, and available in Private Retreat, over the phone or through Zoom.</p>' +
@@ -815,7 +849,9 @@ I hold certifications in the following but my connection to the divine and the c
     document.querySelectorAll('[data-nav]').forEach(a => { if (a.dataset.nav === (show === 'reader' ? 'blog' : (SUBPAGES[show] || show))) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
     const h1el = document.querySelector('[data-view="' + show + '"] h1'); const label = (NAV.find(n => n[0] === show) || [])[1] || (h1el && h1el.textContent);
     document.title = show === 'reader' ? post.title + ' · Estrella Soul Guide' : (show !== 'home' && label) ? label + ' · Estrella Soul Guide' : 'Estrella Soul Guide';
-    if (gate){ if (show === 'classes') gate.start(); else gate.stop(); }
+    const gv = document.getElementById('gate-video'), gs = document.getElementById('gate-stage');
+    if (gs) gs.classList.remove('entering');
+    if (gv){ if (show === 'dragon-gate'){ try { const p = gv.play(); if (p && p.catch) p.catch(() => {}); } catch (err) {} } else gv.pause(); }
     closeMenu();
     if (target) target.scrollIntoView(); else window.scrollTo(0,0);
   }
@@ -1265,6 +1301,15 @@ I hold certifications in the following but my connection to the divine and the c
   document.addEventListener('click', e => {
     const b = e.target.closest('[data-act]'); if (!b) return;
     const act = b.dataset.act, id = b.dataset.id;
+    if (act === 'enter-gate'){
+      const stage = document.getElementById('gate-stage');
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!stage || reduce || stage.classList.contains('entering')) return;
+      e.preventDefault();
+      stage.classList.add('entering');
+      setTimeout(() => { location.hash = 'classes'; }, 1100);
+      return;
+    }
     if (act === 'copy-email'){
       const t = 'estrellasoulguide@gmail.com';
       const done = () => { b.textContent = 'Copied'; setTimeout(() => { b.textContent = 'Copy'; }, 2000); };
