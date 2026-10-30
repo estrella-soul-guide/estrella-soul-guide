@@ -133,7 +133,7 @@ def main():
             else if (sections[h]) url = pathFor(sections[h]) + '#' + h;
             a.setAttribute('href', url);
           });
-          root.querySelectorAll('video').forEach(v => ['src', 'poster'].forEach(k => {
+          root.querySelectorAll('video, img').forEach(v => ['src', 'poster'].forEach(k => {
             const val = v.getAttribute(k); if (val && !/^(\\/|https?:)/.test(val)) v.setAttribute(k, '/' + val); }));
           return root.innerHTML;
         }"""
@@ -157,8 +157,9 @@ def main():
     org = {'@type': 'Organization', 'name': BRAND, 'url': SITE + '/', 'logo': SITE + logo_img}
     person = {'@type': 'Person', 'name': 'Genevieve Ivey', 'jobTitle': 'Soul Guide', 'url': SITE + '/becoming-a-channel/'}
 
-    def page(path, title, desc, body, ld, og_type='website', preload=None):
+    def page(path, title, desc, body, ld, og_type='website', preload=None, image=None):
         url = SITE + path
+        og_img = SITE + (image or header_img)
         head = f'''<!doctype html>
 <html lang="en">
 <head>
@@ -172,7 +173,7 @@ def main():
 <meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{esc(desc)}">
 <meta property="og:url" content="{url}">
-<meta property="og:image" content="{SITE}{header_img}">
+<meta property="og:image" content="{og_img}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" href="/favicon.png">
@@ -215,10 +216,11 @@ def main():
     for q in data['posts']:
         path = f"/blog/{q['id']}/"
         desc = plain_excerpt(q['body'])
+        img = '/' + q['image'].lstrip('/') if q.get('image') else None
         ld = {'@context': 'https://schema.org', '@type': 'BlogPosting', 'headline': q['title'],
-              'datePublished': q['date'], 'author': person, 'publisher': org, 'image': SITE + header_img,
+              'datePublished': q['date'], 'author': person, 'publisher': org, 'image': SITE + (img or header_img),
               'mainEntityOfPage': SITE + path, 'description': desc}
-        page(path, f"{q['title']} | {BRAND}", desc, rendered['post:' + q['id']], ld, og_type='article')
+        page(path, f"{q['title']} | {BRAND}", desc, rendered['post:' + q['id']], ld, og_type='article', image=img)
         sitemap.append((path, q['date']))
 
     # 4. Shared script: menu, copy email, the Dragon's Gate portal, and old #links.

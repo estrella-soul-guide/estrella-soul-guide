@@ -82,13 +82,16 @@ h1,h2,h3{font-weight:400;text-wrap:balance;line-height:1.15;margin:0}
 
 /* blog cards */
 .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;list-style:none;margin:0;padding:0}
-.card{display:grid;align-content:start;gap:10px;height:100%;box-sizing:border-box;padding:26px 24px;background:var(--paper);border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:4px 4px 14px 14px;text-decoration:none;color:inherit}
+.card{overflow:hidden;display:grid;align-content:start;gap:10px;height:100%;box-sizing:border-box;padding:26px 24px;background:var(--paper);border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:4px 4px 14px 14px;text-decoration:none;color:inherit}
 .card:hover h3{color:var(--gold)}
 .card .meta{font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);font-weight:600}
 .card h3{font-size:28px;color:var(--rose);font-weight:500;transition:color .2s}
 .card p{margin:0;color:var(--soft);font-size:18px}
 .more-row{display:flex;justify-content:center;margin-top:32px}
 .empty{padding:28px;text-align:center;color:var(--soft);border:1px dashed var(--line);border-radius:14px;font-style:italic}
+
+.card-img{display:block;width:calc(100% + 48px);max-width:none;margin:-26px -24px 6px;aspect-ratio:16/9;height:auto;object-fit:cover}
+.post-hero{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:14px;margin-top:28px}
 
 /* buttons */
 .actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
